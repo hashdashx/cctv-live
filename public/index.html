@@ -1,0 +1,48 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NVR Web — WS H.264 + Legacy MP4 v014g-fix1</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="row1">
+      <h1>NVR Web — WS H.264 + Legacy MP4 <span class="ver">v014g-fix1</span></h1>
+      <div class="right">
+        <select id="gridSelect">
+          <option value="2">Grid 2x2</option>
+          <option value="3">Grid 3x3</option>
+        </select>
+        <select id="presetSelect">
+          <option value="low">Low</option>
+          <option value="balanced" selected>Balanced</option>
+          <option value="high">High</option>
+        </select>
+        <button id="btnChangelog">Changelog</button>
+      </div>
+    </div>
+    <div class="ua">User-Agent: <span id="ua"></span></div>
+    <div class="controls">
+      <input id="camName" placeholder="nama kamera">
+      <input id="camRtsp" placeholder="rtsp://user:pass@ip:554/stream">
+      <button id="btnAdd">Add Camera</button>
+    </div>
+  </header>
+  <main id="camera-container" class="grid grid-2"></main>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-inner">
+      <div class="modal-head">
+        <h3 id="modalTitle">Title</h3>
+        <button id="modalClose">✕</button>
+      </div>
+      <pre id="modalBody" class="modal-body"></pre>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

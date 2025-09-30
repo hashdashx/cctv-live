@@ -1,0 +1,91 @@
+{
+  "port": 8081,
+  "cameras": [
+    {
+      "id": "camera1",
+      "name": "camera1",
+      "rtsp": "rtsp://user:pass@192.168.1.10:554/stream",
+      "legacy": "/streams/camera1/legacy.mp4",
+      "preset": "balanced"
+    },
+    {
+      "id": "camera2",
+      "name": "camera2",
+      "rtsp": "rtsp://user:pass@192.168.1.11:554/stream",
+      "legacy": "/streams/camera2/legacy.mp4",
+      "preset": "balanced"
+    }
+  ],
+  "ffmpeg": {
+    "binary": "ffmpeg",
+    "presets": {
+      "low": {
+        "fps": 15,
+        "bitrate": "800k",
+        "gop": 30
+      },
+      "balanced": {
+        "fps": 25,
+        "bitrate": "1500k",
+        "gop": 50
+      },
+      "high": {
+        "fps": 30,
+        "bitrate": "3000k",
+        "gop": 60
+      }
+    },
+    "args_legacy_template": [
+      "-fflags",
+      "+genpts",
+      "-rtsp_transport",
+      "tcp",
+      "-i",
+      "__RTSP__",
+      "-an",
+      "-c:v",
+      "libx264",
+      "-tune",
+      "zerolatency",
+      "-preset",
+      "veryfast",
+      "-pix_fmt",
+      "yuv420p",
+      "-b:v",
+      "__BITRATE__",
+      "-r",
+      "__FPS__",
+      "-g",
+      "__GOP__",
+      "-keyint_min",
+      "__GOP__",
+      "-x264-params",
+      "scenecut=0",
+      "-movflags",
+      "frag_keyframe+empty_moov+default_base_moof+faststart",
+      "-f",
+      "mp4",
+      "__OUT__"
+    ],
+    "args_ws_template": [
+      "-fflags",
+      "+genpts",
+      "-rtsp_transport",
+      "tcp",
+      "-i",
+      "__RTSP__",
+      "-an",
+      "-c:v",
+      "copy",
+      "-bsf:v",
+      "h264_mp4toannexb",
+      "-r",
+      "__FPS__",
+      "-g",
+      "__GOP__",
+      "-f",
+      "h264",
+      "pipe:1"
+    ]
+  }
+}

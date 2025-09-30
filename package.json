@@ -1,0 +1,14 @@
+{
+  "name": "cctv-live",
+  "version": "0.14.7-fix1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "morgan": "^1.10.0",
+    "ws": "^8.18.0"
+  }
+}
