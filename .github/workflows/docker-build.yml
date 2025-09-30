@@ -1,0 +1,32 @@
+name: Build and Push Docker image
+
+on:
+  push:
+    branches:
+      - main      # otomatis jalan kalau kamu push ke branch main
+  workflow_dispatch:  # bisa dijalankan manual dari tab Actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./dockerfile      # kalau nama file kamu “dockerfile”
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cctv-live:latest
